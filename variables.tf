@@ -1,0 +1,14 @@
+variable "ami_number" {
+  default = "ami-0f095f89ae15be883"
+}
+variable "key_name" {
+  default = "troy_app2"
+}
+variable "instance_name" {
+  default = "demo_git"
+}
+variable "instance_type" {
+  default = "t2.micro"
+}
+variable "subnet_id" {
+  default = "subnet-0323549ff78f73ee0"

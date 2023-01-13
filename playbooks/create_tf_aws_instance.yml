@@ -1,0 +1,34 @@
+---
+- name: Creating Terraform IoC AWS Instance
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars_files:
+    - /var/lib/awx/projects/terraform/terraform/variables.yml
+
+  tasks:
+  - name: Create TF Instance Directory
+    file:
+      path: "/var/lib/awx/projects/terraform/config/{{ instance_name }}"
+      state: directory
+
+  - name: Create Terraform Variables File
+    template:
+      src: "/var/lib/awx/projects/terraform/terraform/variables.tf"
+      dest: "/var/lib/awx/projects/terraform/config/{{ instance_name }}"
+
+  - name: Create main.tf File
+    copy:
+      src: "/var/lib/awx/projects/terraform/config/main.tf"
+      dest: "/var/lib/awx/projects/terraform/config/{{ instance_name }}"
+  
+  - name: Initialize Terraform Provider
+    community.general.terraform:
+      project_path: "/var/lib/awx/projects/terraform/config/{{ instance_name }}"
+      state: absent
+      force_init: true
+    
+  - name: Deploy Terraform Instance
+    community.general.terraform:
+      project_path: "/var/lib/awx/projects/terraform/config/{{ instance_name }}"
+      state: present

@@ -1,0 +1,63 @@
+---
+- name: Deleting Terraform IoC AWS Instance
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars_files:
+    - /var/lib/awx/projects/terraform/git.yml
+    - /var/lib/awx/projects/terraform/terraform/variables.yml
+
+  tasks:
+  - name: Instance Being Deleted
+    debug:
+      msg: "Deleting {{ instance_name }}"
+
+  - name: Delete Terraform Instance
+    community.general.terraform:
+      project_path: "/var/lib/awx/projects/terraform/config/{{ instance_name }}"
+      state: absent
+ 
+  - name: git push clean up
+    shell: git push https://{{ username }}:{{ password }}@github.com/tellis4151/TF_Deployment_Files.git
+    args:
+      chdir: "/var/lib/awx/projects/terraform/TF_Deployment_Files"
+ 
+  - name: Deleting instance project in Git
+    file:
+      path: "/var/lib/awx/projects/terraform/TF_Deployment_Files/{{ instance_name }}"
+      state: absent
+
+  - name: git add deleted files
+    shell: git add -A
+    args:
+      chdir: "/var/lib/awx/projects/terraform/TF_Deployment_Files"
+ 
+  - name: git status
+    shell: git status
+    args:
+      chdir: "/var/lib/awx/projects/terraform/TF_Deployment_Files"
+    register: git_del_status
+
+  - name: Printing out git del status
+    debug:
+      msg: "{{ git_del_status }}"
+  
+  - name: Set global config for username
+    shell: git config --global user.name "tellis4151"
+    args:
+      chdir: "/var/lib/awx/projects/terraform/TF_Deployment_Files"
+
+  - name: Set Global config for email address
+    shell : git config --global user.email "troyellis3@gmail.com"
+    args:
+      chdir: "/var/lib/awx/projects/terraform/TF_Deployment_Files"
+
+  - name: git commit
+    shell: git commit -m "Committing Deleted Terraform Instance Files"
+    args:
+      chdir: "/var/lib/awx/projects/terraform/TF_Deployment_Files"
+
+  - name: git push
+    shell: git push https://{{ username }}:{{ password }}@github.com/tellis4151/TF_Deployment_Files.git
+    args:
+      chdir: "/var/lib/awx/projects/terraform/TF_Deployment_Files"

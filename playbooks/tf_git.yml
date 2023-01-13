@@ -1,0 +1,69 @@
+---
+- name: Updating TF Git Repository
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars_files:
+    - /var/lib/awx/projects/terraform/git.yml
+    - /var/lib/awx/projects/terraform/terraform/variables.yml
+
+  tasks:
+  - name: Creating instance project in Git
+    file:
+      path: "/var/lib/awx/projects/terraform/TF_Deployment_Files/{{ instance_name }}"
+      state: directory
+
+  - name: Backing up Terraform Variables Template
+    copy:
+      src: "/var/lib/awx/projects/terraform/terraform/{{ instance_name }}/variables.tf"
+      dest: "/var/lib/awx/projects/terraform/TF_Deployment_Files/{{ instance_name }}"
+
+  - name: Backing up Terraform Main Template
+    copy:
+      src: "/var/lib/awx/projects/terraform/templates/main.tf"
+      dest: "/var/lib/awx/projects/terraform/TF_Deployment_Files/{{ instance_name }}"
+
+  - name: Backing up TF State File
+    copy:
+      src: "/var/lib/awx/projects/terraform/config/{{ instance_name }}/terraform.tfstate"
+      dest: "/var/lib/awx/projects/terraform/TF_Deployment_Files/{{ instance_name }}"
+
+  - name: Backing up TF State backup file
+    copy:
+      src: "/var/lib/awx/projects/terraform/config/{{ instance_name }}/terraform.tfstate.backup"
+      dest: "/var/lib/awx/projects/terraform/TF_Deployment_Files/{{ instance_name }}"
+
+  - name: git add all new files
+    shell: git add -A
+    args:
+      chdir: "/var/lib/awx/projects/terraform/TF_Deployment_Files"
+
+  - name: git status
+    shell: git status
+    args:
+      chdir: "/var/lib/awx/projects/terraform/TF_Deployment_Files"
+    register: git_add_status
+
+  - name: Printing out git add status
+    debug:
+      msg: "{{ git_add_status }}"
+  
+  - name: Set global config for username
+    shell: git config --global user.name "tellis4151"
+    args:
+      chdir: "/var/lib/awx/projects/terraform/TF_Deployment_Files"
+ 
+  - name: Set Global config for email address
+    shell : git config --global user.email "troyellis3@gmail.com"
+    args:
+      chdir: "/var/lib/awx/projects/terraform/TF_Deployment_Files"
+  
+  - name: git commit
+    shell: git commit -m "Committing Terraform Instance Files"
+    args:
+      chdir: "/var/lib/awx/projects/terraform/TF_Deployment_Files"
+  
+  - name: git push
+    shell: git push https://{{ username }}:{{ password }}@github.com/tellis4151/TF_Deployment_Files.git
+    args:
+      chdir: "/var/lib/awx/projects/terraform/TF_Deployment_Files"
