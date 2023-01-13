@@ -2,7 +2,7 @@ variable "ami_number" {
   default = "ami-0f095f89ae15be883"
 }
 variable "key_name" {
-  default = "troy_app2"
+  default = "trellis_aap2"
 }
 variable "instance_name" {
   default = "demo_git_rhte"

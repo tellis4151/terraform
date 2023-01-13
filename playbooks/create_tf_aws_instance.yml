@@ -5,8 +5,13 @@
   gather_facts: false
   vars_files:
     - /var/lib/awx/projects/terraform/terraform/variables.yml
-
+  
   tasks:
+  - name: git add all new files
+    shell: git pull
+    args:
+      chdir: "/var/lib/awx/projects/terraform/terraform"  
+
   - name: Create TF Instance Directory
     file:
       path: "/var/lib/awx/projects/terraform/config/{{ instance_name }}"
