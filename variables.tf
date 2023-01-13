@@ -12,3 +12,4 @@ variable "instance_type" {
 }
 variable "subnet_id" {
   default = "subnet-0323549ff78f73ee0"
+}
