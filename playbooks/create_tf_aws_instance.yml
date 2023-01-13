@@ -13,7 +13,7 @@
       state: directory
 
   - name: Create Terraform Variables File
-    template:
+    copy:
       src: "/var/lib/awx/projects/terraform/terraform/variables.tf"
       dest: "/var/lib/awx/projects/terraform/config/{{ instance_name }}"
 
