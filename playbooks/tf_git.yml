@@ -15,12 +15,12 @@
 
   - name: Backing up Terraform Variables Template
     copy:
-      src: "/var/lib/awx/projects/terraform/terraform/{{ instance_name }}/variables.tf"
+      src: "/var/lib/awx/projects/terraform/config/{{ instance_name }}/variables.tf"
       dest: "/var/lib/awx/projects/terraform/TF_Deployment_Files/{{ instance_name }}"
 
   - name: Backing up Terraform Main Template
     copy:
-      src: "/var/lib/awx/projects/terraform/templates/main.tf"
+      src: "/var/lib/awx/projects/terraform/config/{{ instance_name }}/main.tf"
       dest: "/var/lib/awx/projects/terraform/TF_Deployment_Files/{{ instance_name }}"
 
   - name: Backing up TF State File
