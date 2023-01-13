@@ -5,7 +5,7 @@ variable "key_name" {
   default = "troy_app2"
 }
 variable "instance_name" {
-  default = "demo_git"
+  default = "demo_git_1"
 }
 variable "instance_type" {
   default = "t2.micro"
