@@ -8,7 +8,7 @@ variable "instance_name" {
   default = "demo_git_rhte"
 }
 variable "instance_type" {
-  default = "t2.micro"
+  default = "t2.medium"
 }
 variable "subnet_id" {
   default = "subnet-0323549ff78f73ee0"
