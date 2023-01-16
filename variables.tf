@@ -5,7 +5,7 @@ variable "key_name" {
   default = "trellis_aap2"
 }
 variable "instance_name" {
-  default = "demo_git_rhte"
+  default = "demo_git_te"
 }
 variable "instance_type" {
   default = "t2.medium"
