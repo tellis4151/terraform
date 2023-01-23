@@ -16,6 +16,7 @@
     cloud.terraform.terraform:
       project_path: "/var/lib/awx/projects/terraform/config/{{ instance_name }}"
       state: absent
+      binary_path: "/var/lib/awx/projects/terraform/binary/terraform"
  
   - name: git push clean up
     shell: git push https://{{ username }}:{{ password }}@github.com/tellis4151/TF_Deployment_Files.git
