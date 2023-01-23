@@ -28,12 +28,14 @@
       dest: "/var/lib/awx/projects/terraform/config/{{ instance_name }}"
   
   - name: Initialize Terraform Provider
-    community.general.terraform:
+    cloud.terraform.terraform:
       project_path: "/var/lib/awx/projects/terraform/config/{{ instance_name }}"
       state: absent
       force_init: true
+      binary_path: "/var/lib/awx/projects/terraform/binary/terraform"
     
   - name: Deploy Terraform Instance
-    community.general.terraform:
+    cloud.terraform.terraform:
       project_path: "/var/lib/awx/projects/terraform/config/{{ instance_name }}"
       state: present
+      binary_path: "/var/lib/awx/projects/terraform/binary/terraform"
