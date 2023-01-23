@@ -5,7 +5,7 @@ variable "key_name" {
   default = "trellis_aap2"
 }
 variable "instance_name" {
-  default = "instance_3_te"
+  default = "instance_4_te"
 }
 variable "instance_type" {
   default = "t2.medium"
