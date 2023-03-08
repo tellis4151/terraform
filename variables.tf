@@ -5,7 +5,7 @@ variable "key_name" {
   default = "trellis_aap2"
 }
 variable "instance_name" {
-  default = "college_hoops_1"
+  default = "college_bball"
 }
 variable "instance_type" {
   default = "t2.medium"
