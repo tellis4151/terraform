@@ -22,7 +22,7 @@
 
   - name: Download "index.html" file with "hello world" content
     get_url:
-      url: "https://github.com/tellis4151/terraform/blob/main/templates/index.html.j2"
+      url: "https://raw.githubusercontent.com/tellis4151/terraform/refs/heads/main/templates/index.html.j2"
       dest: /var/www/html/hello-world/index.html
 
 #  - name: Copy "index.hthml to default Nginx location"
