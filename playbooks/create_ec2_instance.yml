@@ -1,0 +1,25 @@
+---
+- name: Building AWS EC2 Instance
+  hosts: localhost
+  connection: local
+  gather_facts: false
+ 
+  tasks:
+  - name: Create EC2 instance
+    amazon.aws.ec2_instance:
+      name: "{{ name }}"
+      instance_type: t2.small
+      image_id: ami-0583d8c7a9c35822c
+      count: 1
+      key_name: "{{ key_name }}"
+      network:
+        assign_public_ip: true
+        subnet_id: "{{ subnet_id }}"
+      security_group: "{{ security_group }}"
+      wait: yes
+      region: us-east-2
+      volumes:
+        - device_name: /dev/sda1
+          ebs:
+            volume_size: 40
+            delete_on_termination: true
