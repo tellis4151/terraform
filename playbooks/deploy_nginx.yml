@@ -12,7 +12,7 @@
   - name: Enable nginx service
     service:
       name: nginx
-      state: enabled
+      enabled: yes
    
   - name: Create directory for content
     file:
