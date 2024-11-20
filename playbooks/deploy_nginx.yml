@@ -28,17 +28,17 @@
   - name: Copy "index.hthml to default Nginx location"
     copy:
       src: /var/www/html/hello-world/index.html
-      dest: /var/www/html/index.html
+      dest: /usr/share/testpage/index.html
       mode: '0644'
       remote_src: true
 
-  - name: Enable default Nginx website
-    file:
-      src: /etc/nginx/sites-available/default
-      path: /etc/nginx/sites-enabled/default
-      state: link
+#  - name: Copy to Nginx Default Page
+#   file:
+#      src: /var/wwww
+#      path: /etc/nginx/sites-enabled/default
+#      state: link
 
   - name: Restart Nginx
     service: 
-#      name: nginx
-#      state: started
+      name: nginx
+      state: restarted
