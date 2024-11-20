@@ -9,7 +9,7 @@
     amazon.aws.ec2_instance:
       name: "{{ name }}"
       instance_type: t2.small
-      image_id: ami-0583d8c7a9c35822c
+      image_id: "{{ image_id }}"
       count: 1
       key_name: "{{ key_name }}"
       network:
