@@ -20,26 +20,25 @@
       state: directory
       mode: '0755'
 
-  - name: Create "index.html" file with "hello world" content
-    template:
-      src: "templates/index.html.j2"
+  - name: Download "index.html" file with "hello world" content
+    get_url:
+      url: "https://github.com/tellis4151/terraform/blob/main/templates/index.html.j2"
       dest: /var/www/html/hello-world/index.html
-      mode: '0644'
 
-  - name: Copy "index.hthml to default Nginx location"
-    copy:
-      src: /var/www/html/hello-world/index.html
-      dest: /var/www/html/index.html
-      mode: '0644'
-      remote_src: true
+#  - name: Copy "index.hthml to default Nginx location"
+#    copy:
+#      src: /var/www/html/hello-world/index.html
+#      dest: /var/www/html/index.html
+#      mode: '0644'
+#      remote_src: true
 
-  - name: Enable default Nginx website
-    file:
-      src: /etc/nginx/sites-available/default
-      path: /etc/nginx/sites-enabled/default
-      state: link
+#  - name: Enable default Nginx website
+#    file:
+#      src: /etc/nginx/sites-available/default
+#      path: /etc/nginx/sites-enabled/default
+#      state: link
 
-  - name: Restart Nginx
-    service: 
-      name: nginx
-      state: started
+#  - name: Restart Nginx
+#    service: 
+#      name: nginx
+#      state: started
