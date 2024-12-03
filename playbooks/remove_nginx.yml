@@ -9,7 +9,7 @@
       name: nginx
       state: stopped
 
-  - name: Enable nginx service
+  - name: Disable nginx service
     service:
       name: nginx
       enabled: false
