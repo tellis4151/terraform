@@ -39,7 +39,7 @@
     - name: Add points if ping command was run
       ansible.builtin.set_fact:
         student_score: "{{ student_score|int + 5 }}"
-      when: task_2_1.job_list[0].status == "success"
+      when: task2_1.job_list[0].status == "success"
 
     - debug:
         msg: "Your Score after Task 2.1: {{ student_score }}"
@@ -57,7 +57,7 @@
     - name: Add points if service command was run
       ansible.builtin.set_fact:
         student_score: "{{ student_score|int + 5 }}"
-      when: task_2_2.job_list[0].status == "failed"
+      when: task2_2.job_list[0].status == "failed"
 
     - debug:
         msg: "Your Score after Task 2.2: {{ student_score }}"
@@ -75,7 +75,7 @@
     - name: Add points if Deploy Nginx Job Template was created and ran successfully
       ansible.builtin.set_fact:
         student_score: "{{ student_score|int + 20 }}"
-      when: task_3.job_list[0].status == "success"
+      when: task3.job_list[0].status == "success"
 
     - debug:
         msg: "Your Score after Task 3: {{ student_score }}"
