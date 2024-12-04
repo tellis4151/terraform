@@ -26,45 +26,45 @@
 #    - debug:
 #        msg: "Your Score after Task 1: {{ student_score }}"
 
-    - name: Check if ping Ad Hoc command was successfully run 
-      ansible.controller.job_list:
-        controller_host: "{{ controller_host }}"
-        controller_username: "{{ controller_username }}"
-        controller_password: "{{ controller_password }}"
-        query: {"name":"ping"}
-        status: success
-        validate_certs: false
-      register: task2_1
+#    - name: Check if ping Ad Hoc command was successfully run 
+#      ansible.controller.job_list:
+#        controller_host: "{{ controller_host }}"
+#        controller_username: "{{ controller_username }}"
+#        controller_password: "{{ controller_password }}"
+#        query: {"name":"ping"}
+#        status: success
+#        validate_certs: false
+#      register: task2_1
 
-    - name: Print task2_1
-      debug:
-        msg: "{{ task2_1 }}" 
+#    - name: Print task2_1
+#      debug:
+#        msg: "{{ task2_1 }}" 
 
-    - name: Add points if ping command was run
-      ansible.builtin.set_fact:
-        student_score: "{{ student_score|int + 5 }}"
-      when: task2_1.job_list[0].status == "success"
+#    - name: Add points if ping command was run
+#     ansible.builtin.set_fact:
+#        student_score: "{{ student_score|int + 5 }}"
+#      when: task2_1.job_list[0].status == "success"
 
-    - debug:
-        msg: "Your Score after Task 2.1: {{ student_score }}"
+#   - debug:
+#        msg: "Your Score after Task 2.1: {{ student_score }}"
 
-    - name: Check if service Ad Hoc command was successfully run
-      ansible.controller.job_list:
-        controller_host: "{{ controller_host }}"
-        controller_username: "{{ controller_username }}"
-        controller_password: "{{ controller_password }}"
-        query: {"name":"command"}
-        status: failed
-        validate_certs: false
-      register: task2_2
+#    - name: Check if service Ad Hoc command was successfully run
+#      ansible.controller.job_list:
+#        controller_host: "{{ controller_host }}"
+#        controller_username: "{{ controller_username }}"
+#        controller_password: "{{ controller_password }}"
+#        query: {"name":"command"}
+#        status: failed
+#        validate_certs: false
+#      register: task2_2
 
-    - name: Add points if service command was run
-      ansible.builtin.set_fact:
-        student_score: "{{ student_score|int + 5 }}"
-      when: task2_2.job_list[0].status == "failed"
+#    - name: Add points if service command was run
+#      ansible.builtin.set_fact:
+#        student_score: "{{ student_score|int + 5 }}"
+#      when: task2_2.job_list[0].status == "failed"
 
-    - debug:
-        msg: "Your Score after Task 2.2: {{ student_score }}"
+#    - debug:
+#        msg: "Your Score after Task 2.2: {{ student_score }}"
 
     - name: Check Deploy Nginx Job ran successfully
       ansible.controller.job_list:
@@ -72,7 +72,7 @@
         controller_username: "{{ controller_username }}"
         controller_password: "{{ controller_password }}"
         query: {"playbook":"deploy_nginx.yml"}
-        status: succesful
+        status: successful
         validate_certs: false
       register: task_3
 
