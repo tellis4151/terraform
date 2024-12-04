@@ -32,7 +32,7 @@
         controller_username: "{{ controller_username }}"
         controller_password: "{{ controller_password }}"
         query: {"name":"ping"}
-        status: successful
+        status: success
         validate_certs: false
       register: task2_1
 
