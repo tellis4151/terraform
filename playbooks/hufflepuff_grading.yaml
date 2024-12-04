@@ -36,6 +36,10 @@
         validate_certs: false
       register: task2_1
 
+    - name: Print task2_1
+      debug:
+        msg: "{{ task2_1.stdout }}" 
+
     - name: Add points if ping command was run
       ansible.builtin.set_fact:
         student_score: "{{ student_score|int + 5 }}"
