@@ -99,7 +99,7 @@
         msg: "Your Score after Task 4_1: {{ student_score }}"
 
     - name: Check if Uninstall Nginx Job was scheduled
-      aansible.controller.schedule:
+      ansible.controller.schedule:
         controller_host: "{{ controller_host }}"
         controller_username: "{{ controller_username }}"
         controller_password: "{{ controller_password }}"
