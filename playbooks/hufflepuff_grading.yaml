@@ -38,7 +38,7 @@
 
     - name: Print task2_1
       debug:
-        msg: "{{ task2_1.stdout }}" 
+        msg: "{{ task2_1 }}" 
 
     - name: Add points if ping command was run
       ansible.builtin.set_fact:
