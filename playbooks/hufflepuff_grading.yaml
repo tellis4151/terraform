@@ -1,138 +1,40 @@
 ---
-- hosts: localhost
+- hosts: webservers
   gather_facts: false
+  become: true
 
   tasks:
     - name: Start score sum
       ansible.builtin.set_fact:
         student_score: 0
 
-#    - name: Check webservers group
-#      ansible.controller.group:
-#        controller_host: "{{ controller_host }}"
-#        controller_username: "{{ controller_username }}"
-#        controller_password: "{{ controller_password }}"
-#        name: "{{ hufflepuff_inventory_group_name }}"
-#        inventory: "{{ hufflepuff_inventory_name }}"
-#        state: exists
-#        validate_certs: false
-#      register: task1
+    - name: Check webservers group
+      ansible.builtin.command: ping
+      register: task1
 
-#    - name: Add points if webservers group exists
-#      ansible.builtin.set_fact:
-#        student_score: "{{ student_score|int + 5 }}"
-#      when: task1.group[0].name == "webservers"
+    - name: Print task 1 variable
+      debug:
+        var: task1 
 
-#    - debug:
-#        msg: "Your Score after Task 1: {{ student_score }}"
+    - name: Check if Deploy Nginx Template was run
+      stat:
+        path: /var/www/html/hello-world/index.html
+      register: task2
 
-#    - name: Check if ping Ad Hoc command was successfully run 
-#      ansible.controller.job_list:
-#        controller_host: "{{ controller_host }}"
-#        controller_username: "{{ controller_username }}"
-#        controller_password: "{{ controller_password }}"
-#        query: {"name":"ping"}
-#        status: success
-#        validate_certs: false
-#      register: task2_1
+    - name: Print task 2 variable
+      debug:
+        var: task2
 
-#    - name: Print task2_1
-#      debug:
-#        msg: "{{ task2_1 }}" 
-
-#    - name: Add points if ping command was run
-#     ansible.builtin.set_fact:
-#        student_score: "{{ student_score|int + 5 }}"
-#      when: task2_1.job_list[0].status == "success"
-
-#   - debug:
-#        msg: "Your Score after Task 2.1: {{ student_score }}"
-
-#    - name: Check if service Ad Hoc command was successfully run
-#      ansible.controller.job_list:
-#        controller_host: "{{ controller_host }}"
-#        controller_username: "{{ controller_username }}"
-#        controller_password: "{{ controller_password }}"
-#        query: {"name":"command"}
-#        status: failed
-#        validate_certs: false
-#      register: task2_2
-
-#    - name: Add points if service command was run
-#      ansible.builtin.set_fact:
-#        student_score: "{{ student_score|int + 5 }}"
-#      when: task2_2.job_list[0].status == "failed"
-
-#    - debug:
-#        msg: "Your Score after Task 2.2: {{ student_score }}"
-
-    - name: Check Deploy Nginx Job ran successfully
-      ansible.controller.job_list:
-        controller_host: "{{ controller_host }}"
-        controller_username: "{{ controller_username }}"
-        controller_password: "{{ controller_password }}"
-        query: {"playbook":"deploy_nginx.yml"}
-        status: successful
-        validate_certs: false
-      register: task_3
-
-    - name: Add points if Deploy Nginx Job Template was created and ran successfully
-      ansible.builtin.set_fact:
-        student_score: "{{ student_score|int + 20 }}"
-      when: task3.job_list[0].status == "success"
-
-    - debug:
-        msg: "Your Score after Task 3: {{ student_score }}"
-
-    - name: Check if Uninstall Nginx Job ran successfully
-      ansible.controller.job_list:
-        controller_host: "{{ controller_host }}"
-        controller_username: "{{ controller_username }}"
-        controller_password: "{{ controller_password }}"
-        query: {"playbook":"remove_nginx.yml"}
-        status: succesful
-        validate_certs: false
-      register: task4_1
-
-    - name: Add points if Uninstall Nginx Job Template was created and ran successfully
+    - name: Add points if Nginx deployment wass successful
       ansible.builtin.set_fact:
         student_score: "{{ student_score|int + 10 }}"
-      when: task4_1.job_list[0].status == "success"
+      when: task2.stat.exists
 
-    - debug:
-        msg: "Your Score after Task 4_1: {{ student_score }}"
+    - name: Check if nginx is installed
+      command: rpm - qa | grep nginx
+      register: task3
+      ignore_errors: True
 
-    - name: Check if Uninstall Nginx Job was scheduled
-      ansible.controller.schedule:
-        controller_host: "{{ controller_host }}"
-        controller_username: "{{ controller_username }}"
-        controller_password: "{{ controller_password }}"
-        name: "{{ hufflepuff_schedule_name }}"
-        state: exists
-        validate_certs: false
-      register: task4_2
-
-    - name: Add points if Uninstall Nginx job was scheduled
-      ansible.builtin.set_fact:
-        student_score: "{{ student_score|int + 15 }}"
-      when: task4_2.job_list[0].name == "Remove Nginx"
-
-    - debug:
-        msg: "Your Score after Task 4_2: {{ student_score }}"
-
-#    - name: Set fact organization
-#      ansible.builtin.set_fact:
-#        input_data:
-#          user: "{{ awx_user_name }}"
-#          team: "{{ awx_job_template_name.split()[0] }}"
-#          score: "{{ student_score }}"
-
-#    - name: Send scores to Scoring System
-#      ansible.builtin.uri:
-#        url: "{{ scoring_system_api }}"
-#        method: POST
-#        body_format: json
-#        body: "{{ input_data }}"
-#        status_code: 
-#          - 200
-#          - 201   
+    - name: Print task 3 variable
+      debug:
+        var: task3
