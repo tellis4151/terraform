@@ -8,8 +8,8 @@
       ansible.builtin.set_fact:
         student_score: 0
 
-    - name: Check webservers group
-      ansible.builtin.command: ping
+    - name: Verifying Student webserver exists
+      ansible.builtin.command: ping "{{ student_webserver }}"
       register: task1
 
     - name: Print task 1 variable
