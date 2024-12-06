@@ -52,3 +52,11 @@
     - name: Print task 3 variable
       debug:
         var: task3
+
+    - name: Add points if Nginx Removal was successful
+      ansible.builtin.set_fact:
+        student_score: "{{ student_score|int + 15 }}"
+      when: task3.failed
+
+    - debug:
+        msg: "Your Score after Task 3 is {{ student_score }}"
