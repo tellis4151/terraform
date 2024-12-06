@@ -27,6 +27,9 @@
         student_score: "{{ student_score|int + 10 }}"
       when: task2.id is defined
 
+    - debug:
+        msg: "Your Score after Task 2: {{ student_score }}"
+
     - name: Get Remove Nginx job template ID
       ansible.controller.job_template:
         name: "Hufflepuff Remove Nginx {{ awx_user_name }}"
@@ -45,3 +48,7 @@
       ansible.builtin.set_fact:
         student_score: "{{ student_score|int + 15 }}"
       when: task3.id is defined
+
+    - debug:
+        msg: "Your Score after Task 3: {{ student_score }}"
+
