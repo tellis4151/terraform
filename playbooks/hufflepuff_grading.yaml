@@ -31,7 +31,7 @@
       when: task2.stat.exists
 
     - debug:
-        msg: Your Score after Task 2: "{{ student_score }}"
+        msg: Your Score after Task 2 "{{ student_score }}"
 
     - name: Check if nginx is installed
       command: rpm - qa | grep nginx
