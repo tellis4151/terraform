@@ -10,7 +10,7 @@
 
     - name: Verifying Student webserver exists
       ansible.builtin.command: ping -c 1 "{{ student_webserver }}"
-      ignore_errors: true
+      ignore_unreachable: true
       register: task1
 
     - name: Print task 1 variable
