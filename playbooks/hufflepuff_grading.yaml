@@ -20,6 +20,7 @@
     - name: Add points if Student webserver exists within webservers group
       ansible.builtin.set_fact:
         student_score: "{{ student_score|int + 5 }}"
+      ignore_errors: true
       when: task1.rc == 0
 
     - debug:
