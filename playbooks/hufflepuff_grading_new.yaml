@@ -23,15 +23,15 @@
          var: task2
 
 
-    - name: Get Remove Nginx job template ID
-      ansible.controller.job_template:
-        name: "Hufflepuff Remove Nginx {{ awx_user_name }}"
-        state: exists
-        controller_host: "{{ controller_host }}"
-        controller_username: "{{ controller_username }}"
-        controller_password: "{{ controller_password }}"
-        validate_certs: false
-      register: task2
+     - name: Get Remove Nginx job template ID
+       ansible.controller.job_template:
+         name: "Hufflepuff Remove Nginx {{ awx_user_name }}"
+         state: exists
+         controller_host: "{{ controller_host }}"
+         controller_username: "{{ controller_username }}"
+         controller_password: "{{ controller_password }}"
+         validate_certs: false
+       register: task2
 
      - name: Print task 3 variable
        debug:
