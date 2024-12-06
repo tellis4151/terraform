@@ -9,10 +9,10 @@
 
     - name: Add points if student webserver is part of webservers group
       ansible.builtin.set_fact:
-        student_score: "{{ student_score|int + 5 }}
+        student_score: "{{ student_score|int + 5 }}"
 
     - debug:
-        msg: "Your Score after Task 1 {{ student_score }}"
+        msg: "Your Score after Task 1: {{ student_score }}"
 
     - name: Get Deploy Nginx job template ID
       ansible.controller.job_template:
