@@ -13,9 +13,9 @@
       ignore_unreachable: true
       register: task1
 
-    - name: Print task 1 variable
-      debug:
-        var: task1 
+#    - name: Print task 1 variable
+#      debug:
+#        var: task1 
 
     - name: Add points if Student webserver exists within webservers group
       ansible.builtin.set_fact:
@@ -32,9 +32,9 @@
       ignore_errors: true
       register: task2
 
-    - name: Print task 2 variable
-      debug:
-        var: task2
+#    - name: Print task 2 variable
+#      debug:
+#        var: task2
 
     - name: Add points if Nginx deployment was successful
       ansible.builtin.set_fact:
@@ -49,9 +49,9 @@
       register: task3
       ignore_errors: True
 
-    - name: Print task 3 variable
-      debug:
-        var: task3
+#    - name: Print task 3 variable
+#      debug:
+#        var: task3
 
     - name: Add points if Nginx Removal was successful
       ansible.builtin.set_fact:
