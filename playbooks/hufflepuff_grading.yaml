@@ -17,6 +17,14 @@
       debug:
         var: task1 
 
+    - name: Add points if Student webserver exists within webserver group
+      ansible.builtin.set_fact:
+        student_score: "{{ student_score|int + 5 }}"
+      when: task1.failed == "false"
+
+    - debug:
+        msg: "Your Score after Task 1 is {{ student_score }}"
+
     - name: Check if Deploy Nginx Template was run
       stat:
         path: /var/www/html/hello-world/index.html
@@ -29,10 +37,10 @@
     - name: Add points if Nginx deployment wass successful
       ansible.builtin.set_fact:
         student_score: "{{ student_score|int + 10 }}"
-      when: task2.stat.exists
+      when: task2.stat.exists == "true"
 
     - debug:
-        msg: "Your Score after Task 2 {{ student_score }}"
+        msg: "Your Score after Task 2 is {{ student_score }}"
 
     - name: Check if nginx is installed
       command: rpm - qa | grep nginx
