@@ -9,7 +9,8 @@
         student_score: 0
 
     - name: Verifying Student webserver exists
-      ansible.builtin.command: ping "{{ student_webserver }}"
+      ansible.builtin.command: ping -c 1 "{{ student_webserver }}"
+      ignore_errors: true
       register: task1
 
     - name: Print task 1 variable
