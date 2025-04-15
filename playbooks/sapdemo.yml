@@ -1,3 +1,4 @@
+---
 - name: Install and Run Terraform
   hosts: localhost
   gather_facts: false
@@ -14,21 +15,23 @@
     - name: Download Terraform binary
       get_url:
         url: '{{ tf_download_url }}'
-        dest: /home/ec2-user/terraform/terraform.zip
+        dest: /home/ec2-user/aap/controller/data/projects/terraform/terraform.zip
         mode: '0644'
 
     - name: Unzip Terraform binary
       unarchive:
-        src: /home/ec2-user/terraform/terraform.zip
+        src: /home/ec2-user/aap/controller/data/projects/terraform/terraform.zip
         dest: /usr/local/bin
         remote_src: 'yes'
         creates: /usr/local/bin/terraform
 
     - name: copy project files to terraform directory
       copy:
-        src: cp /home/ec2-user/IT-automation/
+        src: /home/ec2-user/aap/controller/data/projects/config/
         dest: '{{ tf_dir }}'
-        remote_src: 'yes'
+      loop:
+        - main.tf
+        - variables.tf
 
     - name: Verify Terraform installed
       command: terraform version
@@ -45,7 +48,7 @@
       command: terraform plan -out=tfplan
       args:
         chdir: '{{ tf_dir }}'
-        
+
     - name: Terraform Apply
       command: terraform apply -auto-approve tfplan
       args:
