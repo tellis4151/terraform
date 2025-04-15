@@ -6,7 +6,7 @@
 
   vars:
     tf_version: 1.7.5
-    tf_dir: /home/ec2-user/terraform
+    tf_dir: /home/ec2-user/aap/controller/data/projects/terraform
     tf_download_url: >-
       https://releases.hashicorp.com/terraform/{{ tf_version }}/terraform_{{
       tf_version }}_linux_amd64.zip
