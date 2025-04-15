@@ -1,0 +1,52 @@
+- name: Install and Run Terraform
+  hosts: localhost
+  gather_facts: false
+  become: true
+
+  vars:
+    tf_version: 1.7.5
+    tf_dir: /home/ec2-user/terraform
+    tf_download_url: >-
+      https://releases.hashicorp.com/terraform/{{ tf_version }}/terraform_{{
+      tf_version }}_linux_amd64.zip
+
+  tasks:
+    - name: Download Terraform binary
+      get_url:
+        url: '{{ tf_download_url }}'
+        dest: /home/ec2-user/terraform/terraform.zip
+        mode: '0644'
+
+    - name: Unzip Terraform binary
+      unarchive:
+        src: /home/ec2-user/terraform/terraform.zip
+        dest: /usr/local/bin
+        remote_src: 'yes'
+        creates: /usr/local/bin/terraform
+
+    - name: copy project files to terraform directory
+      copy:
+        src: cp /home/ec2-user/IT-automation/
+        dest: '{{ tf_dir }}'
+        remote_src: 'yes'
+
+    - name: Verify Terraform installed
+      command: terraform version
+      register: tf_check
+      failed_when: tf_check.rc != 0
+      changed_when: false
+
+    - name: Initialize Terraform
+      command: terraform init
+      args:
+        chdir: '{{ tf_dir }}'
+
+    - name: Terraform Plan
+      command: terraform plan -out=tfplan
+      args:
+        chdir: '{{ tf_dir }}'
+        
+    - name: Terraform Apply
+      command: terraform apply -auto-approve tfplan
+      args:
+        chdir: '{{ tf_dir }}'
